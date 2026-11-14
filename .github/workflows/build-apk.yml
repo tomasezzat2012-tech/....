@@ -33,12 +33,17 @@ jobs:
       - name: Unpack project from ZIP
         run: |
           unzip -q LearnEnglishSimply-Android-Source-Firebase.zip -d project
-          GS=$(find . -path ./project -prune -o -iname 'google-services*.json' -print | head -1)
+          GS=$(find . -path ./project -prune -o -iname 'google-services*' -type f -print | head -1)
           echo "Found: $GS"
           if [ -z "$GS" ]; then
-            echo "::error::No google-services json found anywhere in the repo."
-            ls -R . | head -50
+            echo "::error::No google-services file found."
             exit 1
           fi
           cp "$GS" project/app/google-services.json
           if [ -f AppConfig.kt ]; then
+            cp AppConfig.kt project/app/src/main/kotlin/com/learnenglishsimply/app/AppConfig.kt
+          fi
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '
