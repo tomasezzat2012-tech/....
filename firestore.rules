@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+
+    match /users/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.coins == 0;
+      allow update: if signedIn() && request.auth.uid == uid && (
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'grade'])
+        || (
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['coins', 'lastRewardDate'])
+          && request.resource.data.coins == resource.data.coins + 15
+          && request.resource.data.lastRewardDate != resource.data.lastRewardDate
+        )
+      );
+    }
+
+    // Admin adds videos from the Firebase console: title, url, description, order (number)
+    match /videos/{id} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /reviews/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid
+        && request.resource.data.rating >= 1 && request.resource.data.rating <= 5
+        && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 500;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+
+    match /messages/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid
+        && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 500;
+    }
+  }
+}

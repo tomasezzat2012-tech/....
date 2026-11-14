@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learn English Simply - Download</title>
+<meta name="description" content="Learn English Simply: lesson videos, reviews, group chat and daily motivation. Download the Android app.">
+<link rel="icon" href="icon.png">
+<style>
+:root{--bb:#6EC6F0;--bd:#2B8FC7;--soft:#EFF8FD;--ink:#0B3D5A}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6;text-align:center}
+.wrap{max-width:760px;margin:0 auto;padding:36px 20px 60px}
+.icon{width:132px;height:132px;border-radius:30px;box-shadow:0 12px 30px rgba(43,143,199,.35)}
+h1{margin:18px 0 6px;font-size:2rem;color:var(--bd)}
+p.lead{margin:0 auto 24px;max-width:520px;color:#3d6a85}
+.btn{display:inline-block;background:var(--bd);color:#fff;text-decoration:none;font-weight:700;font-size:1.15rem;padding:15px 38px;border-radius:14px;box-shadow:0 8px 20px rgba(43,143,199,.35)}
+.btn:active{transform:scale(.98)}
+.note{font-size:.85rem;color:#6b8da3;margin-top:10px}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:34px 0}
+.feat div{background:var(--soft);border-radius:14px;padding:14px;font-weight:600}
+#shots{margin:30px 0;display:none}
+.car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 14px;-webkit-overflow-scrolling:touch}
+.car img{height:420px;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.15);scroll-snap-align:center;flex:0 0 auto}
+.sup{margin-top:30px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.sup a{border:2px solid var(--bb);color:var(--bd);text-decoration:none;font-weight:700;padding:10px 22px;border-radius:12px}
+footer{margin-top:34px;font-size:.8rem;color:#8aa6b8}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="icon" src="icon.png" alt="Learn English Simply app icon">
+  <h1>Learn English Simply</h1>
+  <p class="lead">Simple English lessons, a friendly group chat, honest reviews, and daily motivation that keeps you going.</p>
+  <a class="btn" id="apk" href="#">Download APK</a>
+  <div class="note">Android 6.0+ &middot; Allow "install unknown apps" when asked</div>
+
+  <div class="feat">
+    <div>Lesson videos</div><div>Reviews</div><div>Group chat</div><div>Daily 15 coins</div>
+  </div>
+
+  <section id="shots"><h2>Inside the app</h2><div class="car" id="car"></div></section>
+
+  <div class="sup">
+    <a id="wa" href="#">WhatsApp support</a>
+    <a id="gm" href="#">Gmail support</a>
+  </div>
+  <footer>Support by WhatsApp or Gmail only &middot; Learn English Simply</footer>
+</div>
+<script src="config.js"></script>
+<script>
+var S=window.SITE;
+document.getElementById('apk').href=S.apk;
+document.getElementById('wa').href='https://wa.me/'+S.whatsapp;
+document.getElementById('gm').href='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(S.gmail)+'&su='+encodeURIComponent('Learn English Simply support');
+fetch('shots.json').then(function(r){return r.json()}).then(function(list){
+  if(!list.length)return;
+  var car=document.getElementById('car');
+  list.forEach(function(f){var i=new Image();i.loading='lazy';i.alt='App screenshot';i.src='screenshots/'+f;car.appendChild(i)});
+  document.getElementById('shots').style.display='block';
+}).catch(function(){});
+</script>
+</body>
+</html>
