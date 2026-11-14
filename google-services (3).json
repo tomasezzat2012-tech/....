@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1070835090554",
+    "project_id": "learn-english-simple-b737e",
+    "storage_bucket": "learn-english-simple-b737e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070835090554:android:6b9912b62f05034345a7c3",
+        "android_client_info": {
+          "package_name": "com.learnenglishsimply.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070835090554-oeihdt6mfldurim0ghps1cfojsqgse2c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLwM89n8AnjE4Wp3ykgjdYRBxshxcXY90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070835090554-oeihdt6mfldurim0ghps1cfojsqgse2c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
