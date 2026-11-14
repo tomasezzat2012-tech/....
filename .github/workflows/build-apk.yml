@@ -33,10 +33,11 @@ jobs:
       - name: Unpack project from ZIP
         run: |
           unzip -q LearnEnglishSimply-Android-Source-Firebase.zip -d project
-          GS=$(find . -path ./project -prune -o -iname 'google-services*' -type f -print | head -1)
+          GS=$(find . -path ./project -prune -o -iname 'google-services*.json' -print | head -1)
           echo "Found: $GS"
           if [ -z "$GS" ]; then
-            echo "::error::No google-services file found."
+            echo "::error::No google-services json found anywhere in the repo."
+            ls -R . | head -50
             exit 1
           fi
           cp "$GS" project/app/google-services.json
@@ -46,4 +47,23 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '
+          gradle-version: '8.9'
+
+      - name: Build release APK
+        working-directory: project
+        run: gradle assembleRelease --stacktrace
+
+      - name: Rename APK
+        run: cp project/app/build/outputs/apk/release/app-release.apk LearnEnglishSimply.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LearnEnglishSimply-apk
+          path: LearnEnglishSimply.apk
+
+      - name: Publish release (download link)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Learn English Simply v${{ github.run_number }}
+          files: LearnEnglishSimply.apk
